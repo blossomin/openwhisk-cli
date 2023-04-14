@@ -43,6 +43,8 @@ const (
 	TIMEOUT_LIMIT     = 60000
 	LOGSIZE_LIMIT     = 10
 	CONCURRENCY_LIMIT = 1
+	// consider a large invoker space
+	INVOKER_LIMIT     = 1000
 	ACTIVATION_ID     = "activationId"
 	WEB_EXPORT_ANNOT  = "web-export"
 	RAW_HTTP_ANNOT    = "raw-http"
@@ -895,11 +897,11 @@ func updateWebSecureAnnotation(websecure string, annotations whisk.KeyValueArr) 
 	return annotations
 }
 
-//
 // Generate a secret according to the --web-secure setting
-//  true:   return a random int64
-//  false:  return false, meaning no secret was returned
-//  string: return the same string
+//
+//	true:   return a random int64
+//	false:  return false, meaning no secret was returned
+//	string: return the same string
 func webSecureSecret(webSecureMode string) interface{} {
 	switch strings.ToLower(webSecureMode) {
 	case "true":
@@ -1327,6 +1329,8 @@ func init() {
 	actionInvokeCmd.Flags().StringVarP(&Flags.common.paramFile, "param-file", "P", "", wski18n.T("`FILE` containing parameter values in JSON format"))
 	actionInvokeCmd.Flags().BoolVarP(&Flags.common.blocking, "blocking", "b", false, wski18n.T("blocking invoke"))
 	actionInvokeCmd.Flags().BoolVarP(&Flags.action.result, "result", "r", false, wski18n.T("blocking invoke; show only activation result (unless there is a failure)"))
+	// To give another flag for action inovker
+	actionInvokeCmd.Flags().IntVarP(&Flags.action.toInvoker, TO_INVOKER, "k", INVOKER_LIMIT, wski18n.T("the `invoker` number this action to be scheduled"))
 
 	actionGetCmd.Flags().BoolVarP(&Flags.common.summary, "summary", "s", false, wski18n.T("summarize action details; parameters with prefix \"*\" are bound, \"**\" are bound and finalized"))
 	actionGetCmd.Flags().BoolVarP(&Flags.action.url, "url", "r", false, wski18n.T("get action url"))

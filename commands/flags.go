@@ -34,6 +34,7 @@ const (
 	WEB_SECURE_FLAG  = "web-secure"
 	SAVE_FLAG        = "save"
 	SAVE_AS_FLAG     = "save-as"
+	TO_INVOKER       = "invoker"
 )
 
 var cliDebug = os.Getenv("WSK_CLI_DEBUG") // Useful for tracing init() code
@@ -153,6 +154,8 @@ type ActionFlags struct {
 	save          bool
 	saveAs        string
 	delAnnotation []string
+	// ToInvoker as the target scheduling invoker
+	toInvoker int
 }
 
 func IsVerbose() bool {

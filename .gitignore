@@ -1,7 +1,7 @@
 
 # Built or generated files
 openwhisk-cli
-wsk
+# wsk
 wsk.exe
 scripts
 Godeps/
